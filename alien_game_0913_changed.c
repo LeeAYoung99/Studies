@@ -66,7 +66,7 @@ int check_overlap(int x1, int y1, int x2, int y2)
 	return 1;
 }
 
-void enemy_run(int me_x, int me_y, int* enemy_x, int* enemy_y)
+void enemy_run(int me_x, int me_y, int* enemy_x, int* enemy_y) ///
 {
 	if(me_x<*enemy_x) // 내 좌표가 enemy보다 왼쪽일 때 enemy가 오른쪽으로 느리게 움직임
 	{
@@ -88,6 +88,29 @@ void enemy_run(int me_x, int me_y, int* enemy_x, int* enemy_y)
 
 }
 
+
+void setBoundary (int* x , int* y) /// 아직 체크 안해봄
+{
+	if(*x<0)
+	{
+		*x=0;
+	}
+	else if(*x>1000)
+	{
+		*x=1000;
+	};
+	
+	if(*y<0)
+	{
+		*y=0;
+	}
+	else if(*y>1000)
+	{
+		*y=1000;
+	};
+	
+}
+
 int main(void)
 {
 	int me_x, me_y;		// 나의 위치
@@ -98,7 +121,7 @@ int main(void)
 	hwnd = GetForegroundWindow();
 	hdc = GetWindowDC(hwnd);
 
-	srand((unsigned)time(NULL)); // 시드 생성
+	srand((unsigned)time(NULL)); /// 시드 생성
 
 	me_x = 100;		// 나의 초기 x 위치
 	me_y = 100;		// 나의 초기 y 위치a
@@ -120,7 +143,9 @@ int main(void)
 			continue;
 		}
 
-		enemy_run(me_x, me_y, &enemy_x, &enemy_y);//
+		enemy_run(me_x, me_y, &enemy_x, &enemy_y); ///
+		
+		setBoundary(&enemy_x,&enemy_y); ///
 		
 		keycode = _getch();
 		switch (keycode) {
@@ -139,6 +164,8 @@ int main(void)
 		case 'q':
 			return 0;
 		}
+		
+		setBoundary(&me_x,&me_y);
 
 		
 		
