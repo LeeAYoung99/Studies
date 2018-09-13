@@ -68,47 +68,83 @@ int check_overlap(int x1, int y1, int x2, int y2)
 
 void enemy_run(int me_x, int me_y, int* enemy_x, int* enemy_y) ///
 {
-	if(me_x<*enemy_x) // 내 좌표가 enemy보다 왼쪽일 때 enemy가 오른쪽으로 느리게 움직임
+	srand((unsigned)time(NULL));
+
+	int case_1 = rand() % 3;
+	int case_2 = rand() % 3;
+
+	if (case_1 < 2)
 	{
-		*enemy_x += 5;
+		if (me_x<*enemy_x) // 내 좌표가 enemy보다 왼쪽일 때 enemy가 오른쪽으로 느리게 움직임
+		{
+			*enemy_x += 3;
+		}
+		else if (me_x > *enemy_x) // 내 좌표가 enemy보다 오른쪽일 때 enemy가 왼쪽으로 느리게 움직임
+		{
+			*enemy_x -= 3;
+		}
 	}
-	else if(me_y > *enemy_y) // 내 좌표가 enemy보다 오른쪽일 때 enemy가 왼쪽으로 느리게 움직임
+	else
 	{
-		*enemy_x -= 5;
+		if (me_x<*enemy_x) 
+		{
+			*enemy_x -= 3;
+		}
+		else if (me_x > *enemy_x) 
+		{
+			*enemy_x += 3;
+		}
+
 	};
 
-	if (me_y < *enemy_y) // 내 좌표가 enemy보다 위쪽일 때 enemy가 아래쪽으로 느리게 움직임
+	if (case_2 < 2)
 	{
-		*enemy_y += 5;
+		if (me_y < *enemy_y) // 내 좌표가 enemy보다 위쪽일 때 enemy가 아래쪽으로 느리게 움직임
+		{
+			*enemy_y += 3;
+		}
+		else if (me_y > *enemy_y)// 내 좌표가 enemy보다 아래쪽일 때 enemy가 위쪽으로 느리게 움직임
+		{
+			*enemy_y -= 3;
+		};
 	}
-	else if(me_y > *enemy_y)// 내 좌표가 enemy보다 아래쪽일 때 enemy가 위쪽으로 느리게 움직임
+	else
 	{
-		*enemy_y -= 5;
+		if (me_y<*enemy_y)
+		{
+			*enemy_y -= 3;
+		}
+		else if (me_y > *enemy_y)
+		{
+			*enemy_y += 3;
+		}
+
 	};
+
 
 }
 
 
-void setBoundary (int* x , int* y) /// 아직 체크 안해봄
+void setBoundary(int* x, int* y) /// 아직 체크 안해봄
 {
-	if(*x<0)
+	if (*x<40)
 	{
-		*x=0;
+		*x = 40;
 	}
-	else if(*x>1000)
+	else if (*x>1000)
 	{
-		*x=1000;
+		*x = 1000;
 	};
-	
-	if(*y<0)
+
+	if (*y<40)
 	{
-		*y=0;
+		*y = 40;
 	}
-	else if(*y>1000)
+	else if (*y>1000)
 	{
-		*y=1000;
+		*y = 1000;
 	};
-	
+
 }
 
 int main(void)
@@ -125,8 +161,8 @@ int main(void)
 
 	me_x = 100;		// 나의 초기 x 위치
 	me_y = 100;		// 나의 초기 y 위치a
-	enemy_x = rand() % 300;	// 적의 초기 x 위치
-	enemy_y = rand() % 300; // 적의 초기 y 위치
+	enemy_x = 40+ rand() % 300;	// 적의 초기 x 위치
+	enemy_y = 40+ rand() % 300; // 적의 초기 y 위치
 
 	while (1)			// 무한 루프
 	{
@@ -144,9 +180,9 @@ int main(void)
 		}
 
 		enemy_run(me_x, me_y, &enemy_x, &enemy_y); ///
-		
-		setBoundary(&enemy_x,&enemy_y); ///
-		
+
+		setBoundary(&enemy_x, &enemy_y); ///
+
 		keycode = _getch();
 		switch (keycode) {
 		case 77:
@@ -164,11 +200,11 @@ int main(void)
 		case 'q':
 			return 0;
 		}
-		
-		setBoundary(&me_x,&me_y);
 
-		
-		
+		setBoundary(&me_x, &me_y);
+
+
+
 	}
 	return 0;
 }
