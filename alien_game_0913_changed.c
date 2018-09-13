@@ -131,18 +131,18 @@ void setBoundary(int* x, int* y) /// 아직 체크 안해봄
 	{
 		*x = 40;
 	}
-	else if (*x>1000)
+	else if (*x>960)
 	{
-		*x = 1000;
+		*x = 960;
 	};
 
 	if (*y<40)
 	{
 		*y = 40;
 	}
-	else if (*y>1000)
+	else if (*y>960)
 	{
-		*y = 1000;
+		*y = 960;
 	};
 
 }
