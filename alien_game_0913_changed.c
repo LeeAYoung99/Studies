@@ -4,6 +4,10 @@
 #include <conio.h>
 #include <time.h>
 
+/*
+두 외계인이 충돌하면 똑같은 모양으로 같이 움직이는 버그가 있음..
+*/
+
 // 사각형의 가로, 세로 길이
 #define WIDTH	20
 #define HEIGHT	20
@@ -66,6 +70,7 @@ int check_overlap(int x1, int y1, int x2, int y2)
 	return 1;
 }
 
+
 void enemy_run(int me_x, int me_y, int* enemy_x, int* enemy_y) ///
 {
 	srand((unsigned)time(NULL));
@@ -86,11 +91,11 @@ void enemy_run(int me_x, int me_y, int* enemy_x, int* enemy_y) ///
 	}
 	else
 	{
-		if (me_x<*enemy_x) 
+		if (me_x<*enemy_x)
 		{
 			*enemy_x -= 3;
 		}
-		else if (me_x > *enemy_x) 
+		else if (me_x > *enemy_x)
 		{
 			*enemy_x += 3;
 		}
@@ -124,7 +129,6 @@ void enemy_run(int me_x, int me_y, int* enemy_x, int* enemy_y) ///
 
 }
 
-
 void setBoundary(int* x, int* y) /// 아직 체크 안해봄
 {
 	if (*x<40)
@@ -147,10 +151,39 @@ void setBoundary(int* x, int* y) /// 아직 체크 안해봄
 
 }
 
+void setEnemyBoundary(int* x1, int* y1, int* x2, int* y2) ///  여기 고치기
+{
+	if((*y2-*y1)<=HEIGHT || (*y1-*y2)<=HEIGHT)
+	{
+		if(*y1>*y2)
+		{
+			*y1 = *y2 + HEIGHT;
+		}
+		else if(*y2>*y1)
+		{
+			*y2 = *y1 + HEIGHT;
+		}
+	};
+
+	if ((*x2 - *x1) <= WIDTH || (*x1 - *x2) <= WIDTH)
+	{
+		if (*x1>*x2)
+		{
+			*x1 = *x2 + WIDTH;
+		}
+		else if (*x2>*x1)
+		{
+			*x2 = *y1 + WIDTH;
+		}
+	}
+
+}
+
 int main(void)
 {
 	int me_x, me_y;		// 나의 위치
-	int enemy_x, enemy_y;	// 적의 위치
+	int enemy1_x, enemy1_y;	// 적1의 위치
+	int enemy2_x, enemy2_y;  //  적2의 위치
 	int score = 0;			// 점수
 	int keycode;			// 키보드에서 받은 문자
 
@@ -161,8 +194,16 @@ int main(void)
 
 	me_x = 100;		// 나의 초기 x 위치
 	me_y = 100;		// 나의 초기 y 위치a
-	enemy_x = 40+ rand() % 300;	// 적의 초기 x 위치
-	enemy_y = 40+ rand() % 300; // 적의 초기 y 위치
+	enemy1_x = 40 + rand() % 300;	// 적1의 초기 x 위치
+	enemy1_y = 40 + rand() % 300; // 적1의 초기 y 위치
+	enemy2_x = 40 + rand() % 300;	// 적2의 초기 x 위치
+	enemy2_y = 40 + rand() % 300; // 적2의 초기 y 위치
+
+	while (check_overlap(enemy1_x, enemy1_y, enemy2_x, enemy2_y) == 1)
+	{
+		enemy2_x = 40 + rand() % 300;	// 적2의 초기 x 위치
+		enemy2_y = 40 + rand() % 300; // 적2의 초기 y 위치
+	}
 
 	while (1)			// 무한 루프
 	{
@@ -170,18 +211,36 @@ int main(void)
 		clear_screen();	// 화면을 지운다. 
 		print_score(score);
 		draw_me(me_x, me_y);	// 나를 그린다. 
-		draw_enemy(enemy_x, enemy_y);	// 적을 그린다. 
-		if (check_overlap(me_x, me_y, enemy_x, enemy_y) == 1)
+		draw_enemy(enemy1_x, enemy1_y);	// 적을 그린다. 
+		draw_enemy(enemy2_x, enemy2_y);	// 적을 그린다. 
+
+		
+
+		if (check_overlap(me_x, me_y, enemy1_x, enemy1_y) == 1)
 		{
 			score++;
-			enemy_x = rand() % 300;
-			enemy_y = rand() % 300;
+			enemy1_x = rand() % 300;
+			enemy1_y = rand() % 300;
 			continue;
 		}
 
-		enemy_run(me_x, me_y, &enemy_x, &enemy_y); ///
+		if (check_overlap(me_x, me_y, enemy2_x, enemy2_y) == 1)
+		{
+			score++;
+			enemy2_x = rand() % 300;
+			enemy2_y = rand() % 300;
+			continue;
+		}
 
-		setBoundary(&enemy_x, &enemy_y); ///
+		enemy_run(me_x, me_y, &enemy1_x, &enemy1_y);
+		enemy_run(me_x, me_y, &enemy2_x, &enemy2_y);///  enemy 위치 바뀌는 부분
+
+		setEnemyBoundary(&enemy1_x, &enemy1_y, &enemy2_x, &enemy2_y);
+
+		setBoundary(&enemy1_x, &enemy1_y);
+		setBoundary(&enemy2_x, &enemy2_y);///
+
+		setEnemyBoundary(&enemy1_x, &enemy1_y, &enemy2_x, &enemy2_y);
 
 		keycode = _getch();
 		switch (keycode) {
@@ -208,5 +267,3 @@ int main(void)
 	}
 	return 0;
 }
-
-
