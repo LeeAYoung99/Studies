@@ -1,4 +1,4 @@
 # Studies
 Self taught
-* includes homework and description of original codes
+* includes homeworks and description of original codes
 * about python, c, cpp, datastructure
