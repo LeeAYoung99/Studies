@@ -42,6 +42,22 @@ def checkdays(days):
 
 # 인트로
 
+print(' ██████╗  ██████╗ ██╗     ██████╗      █████╗ ██╗  ██╗███████╗')   
+print('██╔════╝ ██╔═══██╗██║     ██╔══██╗    ██╔══██╗╚██╗██╔╝██╔════╝') 
+print('██║  ███╗██║   ██║██║     ██║  ██║    ███████║ ╚███╔╝ █████╗    ') 
+print('██║   ██║██║   ██║██║     ██║  ██║    ██╔══██║ ██╔██╗ ██╔══╝     ')
+print('╚██████╔╝╚██████╔╝███████╗██████╔╝    ██║  ██║██╔╝ ██╗███████╗▄█╗')
+print(' ╚═════╝  ╚═════╝ ╚══════╝╚═════╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝')
+
+print('███████╗██╗██╗    ██╗   ██╗███████╗██████╗      █████╗ ██╗  ██╗███████╗')
+print('██╔════╝██║██║    ██║   ██║██╔════╝██╔══██╗    ██╔══██╗╚██╗██╔╝██╔════╝')
+print('███████╗██║██║    ██║   ██║█████╗  ██████╔╝    ███████║ ╚███╔╝ █████╗  ')
+print('╚════██║██║██║    ╚██╗ ██╔╝██╔══╝  ██╔══██╗    ██╔══██║ ██╔██╗ ██╔══╝  ')
+print('███████║██║███████╗╚████╔╝ ███████╗██║  ██║    ██║  ██║██╔╝ ██╗███████╗')
+print('╚══════╝╚═╝╚══════╝ ╚═══╝  ╚══════╝╚═╝  ╚═╝    ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝')
+
+time.sleep(3)                                                           
+
 print("당신은 어느 한 숲속에 가난한 나무꾼입니다")
 time.sleep(2)
 
@@ -85,6 +101,8 @@ firewood_price = 400
 my_money = 5000
 firewood = 40
 
+print('산신령: 방금 도끼를 빠뜨린 것 같은데, 깊은 잠이 들어서 무엇이 너의 것인지 확인하지 못했구나!')
+print('')
 print('산신령: 이 금도끼가 너의 것이냐')
 answer = input('네 또는 아니오를 입력하세요:')
 print('')
@@ -163,6 +181,7 @@ while True:
     print('☆오늘의 Tip.', end='')
     print(random.choice(tip))
 
+    print('')
     time.sleep(1)
     print('1.구매')
     print('2.판매')
@@ -301,7 +320,7 @@ while True:
         print('숫자만 넣어주세용...')
         continue
 
-    gold_axe_price = money_rate_change(6, 20, gold_axe_price)
+    gold_axe_price = money_rate_change(6, 18, gold_axe_price)
     silver_axe_price = money_rate_change(7, 15, silver_axe_price)
     iron_axe_price = money_rate_change(8, 12, iron_axe_price)
     firewood_price = money_rate_change(9, 11, firewood_price)
