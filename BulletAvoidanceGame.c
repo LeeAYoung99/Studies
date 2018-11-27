@@ -1,5 +1,3 @@
-// Every code without references is originally made by Ayoung Lee
-
 #include <stdio.h>
 #include <Windows.h>
 #include <time.h>
@@ -33,14 +31,14 @@ typedef struct enemyBullet // 절대 위치 x,y(처음 생성되는 위치), 상
 	double x;
 	double y;
 	double speed; ////
-	char shape;
+	char* shape;
 }enemyBullet;
 
 typedef struct myCh
 {
 	int x;
 	int y;
-	char shape;
+	char* shape;
 }myCh;
 
 int myScore = 0; // 내 점수 전역변수로 만들기. (조금 아쉽)
@@ -254,13 +252,13 @@ void roundOne() // 직선, 등속으로 떨어지는 패턴
 		switch (a)
 		{
 		case 0:
-			enemybullet[i].shape = 'o';//♩
+			enemybullet[i].shape = "♩";//
 			break;
 		case 1:
-			enemybullet[i].shape = 'p';//♪
+			enemybullet[i].shape = "♪";//
 			break;
 		case 2:
-			enemybullet[i].shape = 'q';//♬
+			enemybullet[i].shape = "♬";//
 			break;
 		default:
 			continue;
